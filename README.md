@@ -1,5 +1,5 @@
 # SCPContainmentBreach
-A remake of the classic "SCP Containment Breach" game, originally programming in Blitz, rewritten in C++. just making this for fun
+Hopefully will be a 2nd version of the classic "SCP Containment Breach" game, continuing the storyline (maybe continuing after being capture in the tunnel in Gate A). just making this for fun
 
 
 # How to compile/build
