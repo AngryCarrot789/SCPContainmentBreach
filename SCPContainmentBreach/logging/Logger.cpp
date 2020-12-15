@@ -1,13 +1,22 @@
 #include "Logger.h"
+#include <conio.h>
+#include <Windows.h>
 
 void Logger::Log(wstring_t message)
 {
-	std::wcout << message;
+	//COORD c = { 1, 1 };
+	//DWORD written;
+	//WriteConsoleOutputCharacterW(stdout, message.c_str(), message.size(), c, &written);
+	wprintf(message.c_str());
+	//std::wcout << message;
+	//fwrite(message.c_str(), message.size(), 1, stdout);
 }
 
 void Logger::LogLine(wstring_t message)
 {
-	std::wcout << message << L'\n';
+	//fwrite((message + L"\n").c_str(), message.size(), 1, stdout);
+	wprintf((message + L'\n').c_str());
+	//std::wcout << message << L'\n';
 }
 
 void Logger::LogLineWindow(wstring_t title, wstring_t message)
@@ -69,5 +78,5 @@ void Logger::LogLineFormat4(wstring_t info1, wstring_t value1, wstring_t info2, 
 
 void Logger::ClearLogs()
 {
-	system("cls");
+	system("clear");
 }

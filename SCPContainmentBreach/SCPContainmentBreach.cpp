@@ -6,11 +6,13 @@
 #include "GL/glew.h"
 #include "game/objects/presets/Sky.h"
 #include "game/scene/scenes/MainScene.h"
+#include "game/render/gui/TextDrawing.h"
 
 Window* MAIN_WINDOW;
 Input* MAIN_INPUT;
 
 Presets PRESETS;
+TextDrawing GLTEXT;
 
 SCPContainmentBreach::SCPContainmentBreach()
 {
@@ -23,7 +25,7 @@ int SCPContainmentBreach::Initialise()
         L"SCP Containment Breach",
         L"SCPContainmentBreach",
         MAIN_INSTANCE,
-        100, 100,
+        600, 100,
         1280, 720,
         false,
         true
@@ -42,6 +44,8 @@ int SCPContainmentBreach::Initialise()
     vScenes.push_back(m_scene);
 
     LoadScene(0);
+
+    GLTEXT.InitOpenGLText();
 
     Logger::LogLineFormat(L"SCP Containment Breach", L"Successfully initialised");
 
@@ -123,30 +127,80 @@ int SCPContainmentBreach::Run()
 	return ErrorCodes::ECGLOOP_EXITED_UNEXPECTED;
 }
 
-void SCPContainmentBreach::Stop()
-{
-    CanRun = false;
-    ClipCursor(NULL);
-    MAIN_WINDOW->DisposeWindow();
-}
 
-void SCPContainmentBreach::LoadScene(int index)
-{
-    if (index >= vScenes.size()) {
-        return;
-    }
+#define ToStr(__i) std::to_string(__i)
+#define BToStr(__b) wstring_t(__b == true ? L"true" : L"false"))
+#define VecToString(__p1) string_t("X: " + ToStr(__p1.x) + " | Y: " + ToStr(__p1.y) + " | Z: " + ToStr(__p1.z))
+#define AABBXStr(__aabb) string_t("MinX: " + ToStr(__aabb.minX) + " | MaxX: " + ToStr(__aabb.maxX))
+#define AABBYStr(__aabb) string_t("MinY: " + ToStr(__aabb.minY) + " | MaxY: " + ToStr(__aabb.maxY))
+#define AABBZStr(__aabb) string_t("MinZ: " + ToStr(__aabb.minZ) + " | MaxZ: " + ToStr(__aabb.maxZ))
+#define AABBString(__aabb) string_t(AABBXStr(__aabb) + "\n" + AABBYStr(__aabb) + "\n" + AABBZStr(__aabb)+ "\n")
 
-    //m_scene->UnloadPlayer();
-    m_scene = vScenes[index];
-    m_scene->LoadPlayer(main_player);
-}
+#define ToWStr(__i) std::to_wstring(__i)
+#define AABBXwStr(__aabb) wstring_t(L"MinX: " + ToWStr(__aabb.minX) + L" | MaxX: " + ToWStr(__aabb.maxX))
+#define AABBYwStr(__aabb) wstring_t(L"MinY: " + ToWStr(__aabb.minY) + L" | MaxY: " + ToWStr(__aabb.maxY))
+#define AABBZwStr(__aabb) wstring_t(L"MinZ: " + ToWStr(__aabb.minZ) + L" | MaxZ: " + ToWStr(__aabb.maxZ))
+#define AABBwString(__aabb) wstring_t(AABBXwStr(__aabb) + L"\n" + AABBYwStr(__aabb) + L"\n" + AABBZwStr(__aabb) + L"\n")
+#define ConcatAll(__ln1, __ln2) wstring_t(__ln1 + L"\n" + __ln2)
+
+#define AABBvAABBX(__aabb1, __aabb2) (wstring_t(L"X Intersects: ") + BToStr(aabb1.IntersectsAABBX(aabb2))
+#define AABBvAABBY(__aabb1, __aabb2) (wstring_t(L"Y Intersects: ") + BToStr(aabb1.IntersectsAABBY(aabb2))
+#define AABBvAABBZ(__aabb1, __aabb2) (wstring_t(L"Z Intersects: ") + BToStr(aabb1.IntersectsAABBZ(aabb2))
+
+#define AABB_OFFSETX(__aabb1, _aabb2) wstring_t(L"X: " + std::to_wstring(__aabb1.GetIntersectionAmountX(_aabb2, true)))
+#define AABB_OFFSETY(__aabb1, _aabb2) wstring_t(L"Y: " + std::to_wstring(__aabb1.GetIntersectionAmountY(_aabb2, true)))
+#define AABB_OFFSETZ(__aabb1, _aabb2) wstring_t(L"Z: " + std::to_wstring(__aabb1.GetIntersectionAmountZ(_aabb2, true)))
 
 void SCPContainmentBreach::Update()
 {
     if (IsSceneActive()) {
         main_player->Update();
-        for (GameObject* object : m_scene->vObjects) {
-            object->Update();
+
+        for (GameObject* object1 : m_scene->vObjects) {
+            if (!object1) continue;
+            object1->Update();
+            PhysicalGameObject* phys1 = object1->AsPhysicalGameObject();
+            if (!phys1) continue;
+
+            PhysicalGameObject* playerPhys = main_player->AsPhysicalGameObject();
+            if (!playerPhys) continue;
+
+            //Logger::LogLine(AABB_OFFSETX(aabb1, aabb2));
+            //Logger::LogLine(AABB_OFFSETY(aabb1, aabb2));
+            //Logger::LogLine(AABB_OFFSETZ(aabb1, aabb2));
+            //wstring_t b1 = AABBwString(aabb1);
+            //wstring_t b2 = AABBwString(aabb2);
+            //Logger::LogLine(b1);
+            //Logger::LogLine(b2);
+            //Logger::LogLine(AABBvAABBX(aabb1, aabb2));
+            //Logger::LogLine(AABBvAABBY(aabb1, aabb2));
+            //Logger::LogLine(AABBvAABBZ(aabb1, aabb2));
+
+            // Player-GameObject collisions
+
+            AxisAlignedBB& aabb1 = main_player->collider;
+            AxisAlignedBB& aabb2 = phys1->collider;
+
+            if (aabb1.IsAABBIntersectingAABB(aabb2)) {
+                //playerPhys->SetVelocity(playerPhys->velocity * (-(aabb1.GetIntersection(aabb2) + 0.1f)));
+            }
+
+            // Inter-GameObject collisions
+
+            //for (GameObject* object2 : m_scene->vObjects) {
+            //    if (!object2) continue;
+            //    if (object1 == object2) continue;
+            //
+            //    PhysicalGameObject* phys2 = object2->AsPhysicalGameObject();
+            //    if (!phys2) continue;
+            //
+            //    AxisAlignedBB& aabb1 = phys1->collider;
+            //    AxisAlignedBB& aabb2 = phys2->collider;
+            //
+            //    if (aabb1.IsAABBIntersectingAABB(aabb2)) {
+            //        DebugDrawing::DrawAABBOutline(main_camera, phys1->collider, 0, 1, 0);
+            //    }
+            //}
         }
     }
 }
@@ -158,15 +212,24 @@ void SCPContainmentBreach::Render(Camera* cam)
         m_scene->sky->Draw(cam);
         //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        main_player->DebugDraw(cam);
+        //main_player->DebugDraw(cam);
+        PhysicalGameObject* playerPhys = main_player->AsPhysicalGameObject();
+        if (playerPhys) {
+            DebugDrawing::DrawAABBOutline(cam, playerPhys->collider, 0, 0, 1);
+        }
+
         for (GameObject* object : m_scene->vObjects) {
             object->Draw(cam);
-            object->DebugDraw(cam);
+
+            PhysicalGameObject* phys1 = object->AsPhysicalGameObject();
+            if (!phys1) continue;
+            DebugDrawing::DrawAABBOutline(cam, phys1->collider, 1, 0, 0);
         }
 
         DebugDrawing::DrawXYZAxis(cam->projection, main_player->cam_ry, main_player->cam_rx);
 
         SwapBuffers(MAIN_WINDOW->DeviceContext);
+
     }
 }
 
@@ -189,4 +252,22 @@ void SCPContainmentBreach::SetupPresetObjectStuff()
     PRESETS.Textures.CheckerboardGreen = new Texture("checker_green.bmp", 1, 1);
     PRESETS.Textures.Gold = new Texture("gold.bmp", 1, 1);
     PRESETS.Textures.White = new Texture("white.bmp", 1, 1);
+}
+
+void SCPContainmentBreach::Stop()
+{
+    CanRun = false;
+    ClipCursor(NULL);
+    MAIN_WINDOW->DisposeWindow();
+}
+
+void SCPContainmentBreach::LoadScene(int index)
+{
+    if (index >= vScenes.size()) {
+        return;
+    }
+
+    //m_scene->UnloadPlayer();
+    m_scene = vScenes[index];
+    m_scene->LoadPlayer(main_player);
 }

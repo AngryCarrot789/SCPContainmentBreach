@@ -21,7 +21,7 @@ public:
 		sky = new Sky();
 		Ground* ground = new Ground();
 		Cube* cube = new Cube();
-		cube->position = Point(-2.0f, 1.01f, 0.0f);
+		cube->position = Point(0.0f, 2.0f, 0.0f);
 		cube->scale = Size(1, 1, 1);
 
 		vObjects.push_back(ground);

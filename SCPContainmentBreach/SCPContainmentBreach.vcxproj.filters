@@ -60,7 +60,10 @@
     <ClCompile Include="game\render\debug\DebugDrawing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\render\gui\TextBlock.cpp">
+    <ClCompile Include="game\render\gui\OpenGLText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\render\gui\TextDrawing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -158,10 +161,16 @@
     <ClInclude Include="game\render\debug\DebugDrawing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\render\gui\TextBlock.h">
+    <ClInclude Include="game\objects\LayerMask.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\objects\LayerMask.h">
+    <ClInclude Include="game\render\gui\OpenGLText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\render\gui\tga.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\render\gui\TextDrawing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
