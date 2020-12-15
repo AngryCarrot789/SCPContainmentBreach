@@ -1,4 +1,6 @@
-#pragma once
+#ifndef HF_VECTOR2
+#define HF_VECTOR2
+
 #include <cmath>
 #include <cfloat>
 #include <cassert>
@@ -150,3 +152,5 @@ typedef Vector2 Size2;
 // Represents an axis or direction
 // In this world, Y = up, Z = Backwards, X = Right in terms of the direction which is positive
 typedef Vector2 Axis2;
+
+#endif

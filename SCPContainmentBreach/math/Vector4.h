@@ -1,4 +1,6 @@
-#pragma once
+#ifndef HF_VECTOR4
+#define HF_VECTOR4
+
 #include "Vector3.h"
 class Vector4 {
 public:
@@ -29,3 +31,5 @@ public:
     //Components
     float x, y, z, w;
 };
+
+#endif

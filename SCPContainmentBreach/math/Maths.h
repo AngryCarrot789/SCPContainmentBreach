@@ -1,4 +1,6 @@
-#pragma once
+#ifndef HF_MATHS
+#define HF_MATHS
+
 class Maths {
 public:
 	static constexpr float PI = 3.141592653589793f;
@@ -60,3 +62,5 @@ public:
 		return (0 < f) - (f < 0);
 	}
 };
+
+#endif

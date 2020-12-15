@@ -5,7 +5,7 @@
 #include "../standard.h"
 #include "ErrorCodes.h"
 
-class Logger
+typedef class Logger
 {
 public:
 	Logger() { }
@@ -33,6 +33,7 @@ public:
 	static void LogLineWindow(wstring_t title, wstring_t message);
 	static void LogError(wstring_t exception, wstring_t message);
 
+	static void LogLineFormat(wstring_t title, wstring_t info);
 	static void LogLineFormat1(wstring_t info1, wstring_t value1);
 	static void LogLineFormat2(wstring_t info1, wstring_t value1, wstring_t info2, wstring_t value2);
 	static void LogLineFormat3(wstring_t info1, wstring_t value1, wstring_t info2, wstring_t value2, wstring_t info3, wstring_t value3);

@@ -1,9 +1,15 @@
 #ifndef HF_RESOURCES
 #define HF_RESOURCES
 
-#include "window/Window.h"
+#ifndef GLOBAL_INSTANCES
+#define GLOBAL_INSTANCES
 
-extern Window* wMainWindow;
-extern HINSTANCE hMainInstance;
+#include "window/Window.h"
+#include "inputs/Inputs.h"
+extern Window* MAIN_WINDOW;
+extern HINSTANCE MAIN_INSTANCE;
+extern Input* MAIN_INPUT;
+
+#endif
 
 #endif

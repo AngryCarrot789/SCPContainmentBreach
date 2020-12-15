@@ -1,4 +1,6 @@
-#pragma once
+#ifndef HF_VECTOR3
+#define HF_VECTOR3
+
 #include <cmath>
 #include <memory>
 #include "Vector2.h"
@@ -150,3 +152,5 @@ public:
     //Components
     float m[9];
 };
+
+#endif

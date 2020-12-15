@@ -122,7 +122,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFastLink</GenerateDebugInformation>
       <AdditionalDependencies>OpenGL32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -145,16 +145,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="game\objects\GameObject.cpp" />
+    <ClCompile Include="game\objects\PhysicalGameObject.cpp" />
     <ClCompile Include="game\render\Camera.cpp" />
+    <ClCompile Include="game\render\Mesh.cpp" />
+    <ClCompile Include="game\render\Shader.cpp" />
+    <ClCompile Include="game\render\Texture.cpp" />
     <ClCompile Include="inputs\Inputs.cpp" />
     <ClCompile Include="logging\Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Quaternion.cpp" />
+    <ClCompile Include="game\scene\Scene.cpp" />
+    <ClCompile Include="game\entity\player\Player.cpp" />
     <ClCompile Include="SCPContainmentBreach.cpp" />
     <ClCompile Include="window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game\GameHeader.h" />
+    <ClInclude Include="game\objects\GameObject.h" />
+    <ClInclude Include="game\objects\PhysicalGameObject.h" />
+    <ClInclude Include="game\objects\presets\Sky.h" />
     <ClInclude Include="game\render\Camera.h" />
+    <ClInclude Include="game\render\Mesh.h" />
+    <ClInclude Include="game\render\presets\Presets.h" />
+    <ClInclude Include="game\render\Shader.h" />
+    <ClInclude Include="game\render\Texture.h" />
     <ClInclude Include="inputs\Inputs.h" />
     <ClInclude Include="logging\ErrorCodes.h" />
     <ClInclude Include="logging\Logger.h" />
@@ -165,7 +180,9 @@
     <ClInclude Include="math\Vector2.h" />
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
+    <ClInclude Include="game\entity\player\Player.h" />
     <ClInclude Include="resources.h" />
+    <ClInclude Include="game\scene\Scene.h" />
     <ClInclude Include="SCPContainmentBreach.h" />
     <ClInclude Include="standard.h" />
     <ClInclude Include="game\timer\Timer.h" />

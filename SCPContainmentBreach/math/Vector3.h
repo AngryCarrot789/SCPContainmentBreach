@@ -1,4 +1,6 @@
-#pragma once
+#ifndef HF_VECTOR3
+#define HF_VECTOR3
+
 #include <cmath>
 #include <cfloat>
 #include <cassert>
@@ -18,12 +20,12 @@ public:
     inline static Vector3 UnitX() { return Vector3(1, 0, 0); }
     inline static Vector3 UnitY() { return Vector3(0, 1, 0); }
     inline static Vector3 UnitZ() { return Vector3(0, 0, 1); }
-    inline static Vector3 Up()       { return Vector3( 0,  1,  0); }
-    inline static Vector3 Down()     { return Vector3( 0, -1,  0); } // Helper
-    inline static Vector3 Right()    { return Vector3( 1,  0,  0); } 
-    inline static Vector3 Left()     { return Vector3(-1,  0,  0); } // Helper
-    inline static Vector3 Backward() { return Vector3( 0,  0,  1); }
-    inline static Vector3 Forward()  { return Vector3( 0,  0, -1); } // Helper
+    inline static Vector3 Up() { return Vector3(0, 1, 0); }
+    inline static Vector3 Down() { return Vector3(0, -1, 0); } // Helper
+    inline static Vector3 Right() { return Vector3(1, 0, 0); }
+    inline static Vector3 Left() { return Vector3(-1, 0, 0); } // Helper
+    inline static Vector3 Backward() { return Vector3(0, 0, 1); }
+    inline static Vector3 Forward() { return Vector3(0, 0, -1); } // Helper
 
     //Setters
     inline void Set(float _x, float _y, float _z) { x = _x; y = _y; z = _z; }
@@ -185,3 +187,6 @@ typedef Vector3 Axis;
 //    out << m.m[12] << ", " << m.m[13] << ", " << m.m[14] << ", " << m.m[15];
 //    return out;
 //}
+
+
+#endif

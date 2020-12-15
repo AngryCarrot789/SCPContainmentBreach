@@ -28,6 +28,11 @@ void Logger::LogWindow(wstring_t title, wstring_t message)
 	Log(msg);
 }
 
+void Logger::LogLineFormat(wstring_t title, wstring_t info)
+{
+	Logger::LogLine(Logger::FormatSenderInfo(title, info));
+}
+
 void Logger::LogLineFormat1(wstring_t info1, wstring_t value1)
 {
 	wstring_t str =

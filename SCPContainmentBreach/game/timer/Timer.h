@@ -40,6 +40,10 @@ public:
         return float(tickDiff) / float(TicksPerSecond);
     }
 
+    static float TicksToSeconds(int tick, int updatesPerSecond) {
+        return float(float(updatesPerSecond) / float(tick));
+    }
+
 private:
     LARGE_INTEGER frequency;        // ticks per second
     LARGE_INTEGER t1, t2;           // ticks

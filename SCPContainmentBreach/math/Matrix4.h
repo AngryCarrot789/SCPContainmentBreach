@@ -1,8 +1,11 @@
-#pragma once
+#ifndef HF_MATRIX4
+#define HF_MATRIX4
+
 #include <cmath>
 #include <memory>
 #include "Vector3.h"
 #include "Vector4.h"
+
 class Matrix4 {
 public:
     //Constructors
@@ -378,3 +381,5 @@ public:
     //Components
     float m[16];
 };
+
+#endif

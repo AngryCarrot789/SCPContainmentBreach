@@ -1,4 +1,6 @@
-#pragma once
+#ifndef HF_QUATERNION
+#define HF_QUATERNION
+
 #include "Vector3.h"
 #include "Maths.h"
 
@@ -199,3 +201,5 @@ public:
 	friend Quaternion operator *(float scalar, Quaternion q);
 	friend Quaternion operator *(Quaternion q, float scalar);
 };
+
+#endif
