@@ -15,10 +15,10 @@ Texture::Texture(const char* fname, int rows, int cols) {
     }
 
     //Read the bitmap
-    char input[54];
-    fin.read(input, 54);
-    const GLsizei width = *reinterpret_cast<int32_t*>(&input[18]);
-    const GLsizei height = *reinterpret_cast<int32_t*>(&input[22]);
+    char Inputs[54];
+    fin.read(Inputs, 54);
+    const GLsizei width = *reinterpret_cast<int32_t*>(&Inputs[18]);
+    const GLsizei height = *reinterpret_cast<int32_t*>(&Inputs[22]);
     assert(width % cols == 0);
     assert(height % rows == 0);
     const int block_w = width / cols;

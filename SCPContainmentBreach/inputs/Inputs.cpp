@@ -6,7 +6,7 @@ Input::Input() {
     memset(this, 0, sizeof(Input));
 }
 
-void Input::EndFrame() {
+void Input::UpdateInputs() {
     memset(KeysPressed, 0, sizeof(KeysPressed));
     memset(MouseButtonsPressed, 0, sizeof(MouseButtonsPressed));
     mouse_dx = mouse_dx * MouseSmoothing + mouse_ddx * (1.0f - MouseSmoothing);

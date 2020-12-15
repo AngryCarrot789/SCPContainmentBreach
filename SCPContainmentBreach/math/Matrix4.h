@@ -72,22 +72,22 @@ public:
     inline static Matrix4 CreateScale(float s) { Matrix4 m; m.MakeScale(Vector3(s)); return m; }
     inline static Matrix4 CreateScale(const Vector3& s) { Matrix4 m; m.MakeScale(s); return m; }
 
-    inline static Matrix4 CreateLocalToWorld(Point pos, Euler euler, Size scale) {
+    inline static Matrix4 CreateLocalToWorld(Point position, Euler euler, Size scale) {
         return
-            Matrix4::CreateTranslation(pos) *
+            Matrix4::CreateTranslation(position) *
             Matrix4::CreateRotationY(euler.y) *
             Matrix4::CreateRotationX(euler.x) *
             Matrix4::CreateRotationZ(euler.z) *
             Matrix4::CreateScale(scale);
     }
 
-    inline static Matrix4 CreateWorldToLocal(Point pos, Euler euler, Size scale) {
+    inline static Matrix4 CreateWorldToLocal(Point position, Euler euler, Size scale) {
         return
             Matrix4::CreateScale(1.0f / scale) *
             Matrix4::CreateRotationZ(-euler.z) *
             Matrix4::CreateRotationX(-euler.x) *
             Matrix4::CreateRotationY(-euler.y) *
-            Matrix4::CreateTranslation(-pos);
+            Matrix4::CreateTranslation(-position);
     }
     inline static Matrix4 CreateProjection(int w, int h, float fov, float n, float f) {
         const float fovRads = 1.0f / std::tan(fov * Maths::PI / 360.0f);

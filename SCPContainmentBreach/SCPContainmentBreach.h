@@ -22,6 +22,8 @@ public:
 	void Stop();
 	bool CanRun;
 
+	void LoadScene(int index);
+
 	void Update();
 	void Render(Camera* cam);
 
@@ -33,11 +35,14 @@ private:
 	Camera* main_camera;
 	Player* main_player;
 
+	bool LockCamera;
+	Matrix4 camera_matrix;
+
 	std::vector<Scene*> vScenes;
 	Scene* m_scene;
-	bool SceneActive() {
-		return m_scene != nullptr;
-	}
+	bool IsSceneActive() { return m_scene != nullptr; }
+
+	void SetupPresetObjectStuff();
 };
 
 #endif // !HP_SCPCONTAINMENTBREACH

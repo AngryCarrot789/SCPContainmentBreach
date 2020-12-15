@@ -54,6 +54,15 @@
     <ClCompile Include="game\objects\PhysicalGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\collision\AxisAlignedBB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\render\debug\DebugDrawing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\render\gui\TextBlock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="standard.h">
@@ -131,9 +140,6 @@
     <ClInclude Include="game\objects\presets\Sky.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\render\presets\Presets.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\scene\scenes\MainScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -141,6 +147,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\objects\presets\Cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\render\Presets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\collision\AxisAlignedBB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\render\debug\DebugDrawing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\render\gui\TextBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\objects\LayerMask.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

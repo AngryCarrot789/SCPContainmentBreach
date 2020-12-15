@@ -4,8 +4,8 @@
 
 Shader::Shader(const char* name) {
     //Get the file paths
-    const std::string vert = "Resources/Shaders/" + std::string(name) + ".vert";
-    const std::string frag = "Resources/Shaders/" + std::string(name) + ".frag";
+    const string_t vert = "resources/Shaders/" + string_t(name) + ".vert";
+    const string_t frag = "resources/Shaders/" + string_t(name) + ".frag";
 
     //Load the shaders from disk
     vertId = LoadShader(vert.c_str(), GL_VERTEX_SHADER);
@@ -35,7 +35,7 @@ Shader::Shader(const char* name) {
         log.resize(logLength);
         glGetProgramInfoLog(progId, logLength, &logLength, log.data());
 
-        std::ofstream fout(std::string(vert) + ".link.log");
+        std::ofstream fout(string_t(vert) + ".link.log");
         fout.write(log.data(), logLength);
 
         progId = 0;
@@ -64,7 +64,7 @@ GLuint Shader::LoadShader(const char* fname, GLenum type) {
     std::ifstream fin(fname);
     std::stringstream buff;
     buff << fin.rdbuf();
-    const std::string str = buff.str();
+    const string_t str = buff.str();
     const char* source = str.c_str();
 
     //Create and compile shader
@@ -83,7 +83,7 @@ GLuint Shader::LoadShader(const char* fname, GLenum type) {
         log.resize(logLength);
         glGetShaderInfoLog(id, logLength, &logLength, log.data());
 
-        std::ofstream fout(std::string(fname) + ".log");
+        std::ofstream fout(string_t(fname) + ".log");
         fout.write(log.data(), logLength);
         return 0;
     }

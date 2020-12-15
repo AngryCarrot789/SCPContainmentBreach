@@ -12,6 +12,10 @@ public:
 	virtual void Reset() override;
 	virtual void Update() override;
 
+	Matrix4 WorldToCam();
+	Matrix4 CamToWorld();
+	Vector3 CamOffset();
+
 	void Look(float mouseDx, float mouseDy);
 	void Move(float moveF, float moveL, float moveUp);
 
@@ -21,8 +25,8 @@ public:
 	float cam_rx;
 	float cam_ry;
 private:
-	float move_f;
-	float move_l;
+	float move_back;
+	float move_right;
 	float move_up;
 
 

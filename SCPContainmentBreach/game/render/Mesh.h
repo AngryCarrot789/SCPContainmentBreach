@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 
+// Careful when deleting mesh pointers because some are contained in PRESETS.Meshes
 class Mesh {
 public:
     static const int NUM_VBOS = 3;

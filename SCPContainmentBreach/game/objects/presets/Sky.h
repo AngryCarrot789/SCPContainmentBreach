@@ -1,17 +1,13 @@
 #ifndef HF_HEADERNAME
 #define HF_HEADERNAME
-#include "../../render/Mesh.h"
-#include "../../render/Shader.h"
+#include "../../render/Presets.h"
 class Sky {
 public:
     Sky() {
-        mesh = new Mesh("quad.obj");
-        shader = new Shader("sky");
+        mesh = PRESETS.Meshes.Quad;
+        shader = PRESETS.Shaders.Sky;
     }
-    ~Sky() {
-        delete(mesh);
-        delete(shader);
-    }
+    ~Sky() { }
 
     void Draw(Camera* cam) {
         glDepthMask(GL_FALSE);

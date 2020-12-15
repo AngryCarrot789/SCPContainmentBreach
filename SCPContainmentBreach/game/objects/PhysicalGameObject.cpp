@@ -24,5 +24,5 @@ void PhysicalGameObject::Update() {
     if (useGravity)
         SetVelocity(velocity + gravity * GAME_DELTATIME);
     SetVelocity(velocity * (1.0f - drag));
-    SetPosition(pos + velocity * GAME_DELTATIME);
+    SetPosition(position + velocity * GAME_DELTATIME);
 }

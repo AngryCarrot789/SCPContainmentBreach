@@ -3,6 +3,7 @@
 
 #include "GL/glew.h"
 
+// Careful when deleting texture pointers because some are contained in PRESETS.Textures
 class Texture {
 public:
 	Texture(const char* fname, int rows, int cols);

@@ -7,6 +7,7 @@
 #include <iostream>
 #include "../../standard.h"
 
+// Careful when deleting shader pointers because some are contained in PRESETS.Shaders
 class Shader {
 public:
 	Shader(const char* name);

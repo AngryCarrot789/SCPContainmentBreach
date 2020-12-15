@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <Windows.h>
 #include <cstdio>
-#include "game/render/presets/Presets.h"
 #include "SCPContainmentBreach.h"
 #include "logging/logger.h"
 #include "game/GameHeader.h"
@@ -50,6 +49,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			break;
 	}
 
+	PRESETS.Dispose();
 	delete scp;
 
 	Logger::LogLine(Logger::FormatSenderInfo(L"WinMain", L"Exited game and successfully shutdown. Bye :))"));

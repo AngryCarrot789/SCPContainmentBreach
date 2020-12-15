@@ -7,7 +7,7 @@ class Input {
 public:
 	Input();
 
-	void EndFrame();
+	void UpdateInputs();
 	void UpdateRaw(const tagRAWINPUT* raw);
 
 	//Keyboard

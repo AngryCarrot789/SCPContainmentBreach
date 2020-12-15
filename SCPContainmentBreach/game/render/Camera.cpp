@@ -41,8 +41,8 @@ void Camera::SetSize(int w, int h, float n, float f, float fov) {
   projection.m[15] = 0.0f;
 }
 
-void Camera::SetPositionOrientation(const Vector3& pos, float rotX, float rotY) {
-  worldView = Matrix4::CreateRotationX(rotX) * Matrix4::CreateRotationY(rotY) * Matrix4::CreateTranslation(-pos);
+void Camera::SetPositionOrientation(const Vector3& position, float rotX, float rotY) {
+  worldView = Matrix4::CreateRotationX(rotX) * Matrix4::CreateRotationY(rotY) * Matrix4::CreateTranslation(-position);
 }
 
 Matrix4 Camera::InverseProjection() const {
@@ -68,8 +68,8 @@ void Camera::UseViewport() const {
   glViewport(0, 0, width, height);
 }
 
-void Camera::ClipOblique(const Vector3& pos, const Vector3& normal) {
-  const Vector3 cpos = (worldView * Vector4(pos, 1)).XYZ();
+void Camera::ClipOblique(const Vector3& position, const Vector3& normal) {
+  const Vector3 cpos = (worldView * Vector4(position, 1)).XYZ();
   const Vector3 cnormal = (worldView * Vector4(normal, 0)).XYZ();
   const Vector4 cplane(cnormal.x, cnormal.y, cnormal.z, -cpos.Dot(cnormal));
 

@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="game\collision\AxisAlignedBB.cpp" />
+    <ClCompile Include="game\render\debug\DebugDrawing.cpp" />
     <ClCompile Include="game\objects\GameObject.cpp" />
     <ClCompile Include="game\objects\PhysicalGameObject.cpp" />
     <ClCompile Include="game\render\Camera.cpp" />
@@ -157,9 +159,13 @@
     <ClCompile Include="math\Quaternion.cpp" />
     <ClCompile Include="game\entity\player\Player.cpp" />
     <ClCompile Include="SCPContainmentBreach.cpp" />
+    <ClCompile Include="game\render\gui\TextBlock.cpp" />
     <ClCompile Include="window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game\collision\AxisAlignedBB.h" />
+    <ClInclude Include="game\objects\LayerMask.h" />
+    <ClInclude Include="game\render\debug\DebugDrawing.h" />
     <ClInclude Include="game\GameHeader.h" />
     <ClInclude Include="game\objects\GameObject.h" />
     <ClInclude Include="game\objects\PhysicalGameObject.h" />
@@ -168,7 +174,6 @@
     <ClInclude Include="game\objects\presets\Sky.h" />
     <ClInclude Include="game\render\Camera.h" />
     <ClInclude Include="game\render\Mesh.h" />
-    <ClInclude Include="game\render\presets\Presets.h" />
     <ClInclude Include="game\render\Shader.h" />
     <ClInclude Include="game\render\Texture.h" />
     <ClInclude Include="game\scene\scenes\MainScene.h" />
@@ -183,11 +188,13 @@
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="game\entity\player\Player.h" />
+    <ClInclude Include="game\render\Presets.h" />
     <ClInclude Include="resources.h" />
     <ClInclude Include="game\scene\Scene.h" />
     <ClInclude Include="SCPContainmentBreach.h" />
     <ClInclude Include="standard.h" />
     <ClInclude Include="game\timer\Timer.h" />
+    <ClInclude Include="game\render\gui\TextBlock.h" />
     <ClInclude Include="window\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

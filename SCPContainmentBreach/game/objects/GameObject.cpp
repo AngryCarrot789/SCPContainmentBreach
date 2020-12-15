@@ -1,6 +1,7 @@
 #include "GameObject.h"
+#include "../render/debug/DebugDrawing.h"
 GameObject::GameObject() :
-    pos(0.0f),
+    position(0.0f),
     euler(0.0f),
     scale(1.0f) {
     doesDebugDraw = true;
@@ -8,7 +9,7 @@ GameObject::GameObject() :
 
 void GameObject::Reset() {
     SetPosition(Vector3::Zero());
-    SetScale(Vector3::Zero());
+    SetScale(Vector3::Ones());
     euler.SetZero();
 }
 
@@ -36,13 +37,13 @@ Vector3 GameObject::Forward() const {
 void GameObject::DebugDraw(Camera* cam)
 {
     if (doesDebugDraw) {
-        //DebugDrawCube(cam, pos, scale);
+        DebugDrawing::DebugDrawCube(cam, position, scale);
     }
 }
 
 Matrix4 GameObject::LocalToWorld() {
     return
-        Matrix4::CreateTranslation(pos) *
+        Matrix4::CreateTranslation(position) *
         Matrix4::CreateRotationY(euler.y) *
         Matrix4::CreateRotationX(euler.x) *
         Matrix4::CreateRotationZ(euler.z) *
@@ -55,5 +56,5 @@ Matrix4 GameObject::WorldToLocal() {
         Matrix4::CreateRotationZ(-euler.z) *
         Matrix4::CreateRotationX(-euler.x) *
         Matrix4::CreateRotationY(-euler.y) *
-        Matrix4::CreateTranslation(-pos);
+        Matrix4::CreateTranslation(-position);
 }

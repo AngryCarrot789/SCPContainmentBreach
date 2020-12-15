@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "../logging/Logger.h"
 #include "GL/glew.h"
+#include "../game/render/debug/DebugDrawing.h"
 
 LRESULT WINAPI StaticWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     Window* window = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
@@ -20,7 +21,7 @@ Window::Window()
     Height = 720;
     IsFullScreen = false;
     IsCursorVisible = true;
-    input = new Input();
+    Inputs = new Input();
 }
 
 Window::Window(wstring_t title,
@@ -40,7 +41,7 @@ Window::Window(wstring_t title,
     Height = height;
     IsFullScreen = isFullscreen;
     IsCursorVisible = cursorVisible;
-    input = new Input();
+    Inputs = new Input();
 }
 
 void Window::InitialiseWindow()
@@ -233,33 +234,47 @@ void Window::SetCursorVisibility(bool isVisible)
 
 void Window::ConfineCursorToCenter()
 {
-    RECT rect = GetWindowRectangle();
-    SetCursorPos((rect.right + rect.left) / 2, (rect.top + rect.bottom) / 2);
+    WindowPosition center = this->GetWindowCenter();
+    SetCursorPos(center.X, center.Y);
 }
 
 RECT Window::GetWindowRectangle()
 {
     RECT r = { NULL };
-    GetWindowRect(GetConsoleWindow(), &r);
+    GetWindowRect(Handle, &r);
     return r;
 }
 
-Position Window::GetWindowPosition()
+RECT Window::GetClientRectangle()
 {
-    RECT rect = GetWindowRectangle();
-    return Position(rect.left, rect.top);
+    RECT r = { NULL };
+    GetClientRect(Handle, &r);
+    return r;
 }
 
-Position Window::GetWindowSize()
+WindowPosition Window::GetDWMFrameWindowPosition()
 {
-    RECT rect = GetWindowRectangle();
-    return Position(rect.right - rect.left, rect.bottom - rect.top);
+    WindowPosition wPos = GetWindowPosition();
+    RECT invisibleBorder = GetDWMInvisibleBorder();
+    return WindowPosition(wPos.X + invisibleBorder.left, wPos.Y + invisibleBorder.top);
 }
 
-Position Window::GetWindowCenter()
+WindowPosition Window::GetWindowPosition()
 {
     RECT rect = GetWindowRectangle();
-    return Position((rect.right + rect.left) / 2, (rect.top + rect.bottom) / 2);
+    return WindowPosition(rect.left, rect.top);
+}
+
+WindowSize Window::GetWindowSize()
+{
+    RECT rect = GetWindowRectangle();
+    return WindowSize(rect.right - rect.left, rect.bottom - rect.top);
+}
+
+WindowPosition Window::GetWindowCenter()
+{
+    RECT rect = GetWindowRectangle();
+    return WindowPosition(rect.left + ((rect.right - rect.left) / 2), rect.top + ((rect.bottom - rect.top) / 2));
 }
 
 int Window::Update()
@@ -275,6 +290,15 @@ int Window::Update()
             DispatchMessage(&msg);
         }
     }
+
+    if (IsCursorConfined) {
+        ConfineCursorToCenter();
+    }
+    if (!IsCursorVisible) {
+        ShowCursor(false);
+    }
+
+
     return ErrorCodes::EC_NOERROR;
 }
 
@@ -302,11 +326,19 @@ LRESULT Window::WindowProc(HWND hCurWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             PostMessage(hCurWnd, WM_PAINT, 0, 0);
             return 0;
 
+        case WM_MOVING:
+        {
+            RECT* r = (RECT*)lParam;
+            PositionX = r->left;
+            PositionY = r->top;
+        }
+        break;
+
         case WM_KEYDOWN:
             //Ignore repeat keys
             if (lParam & 0x40000000) { return 0; }
-            input->KeysDown[wParam & 0xFF] = true;
-            input->KeysPressed[wParam & 0xFF] = true;
+            Inputs->KeysDown[wParam & 0xFF] = true;
+            Inputs->KeysPressed[wParam & 0xFF] = true;
             return 0;
 
         case WM_SYSKEYDOWN:
@@ -317,13 +349,13 @@ LRESULT Window::WindowProc(HWND hCurWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             break;
 
             case WM_KEYUP:
-                input->KeysDown[wParam & 0xFF] = false;
+                Inputs->KeysDown[wParam & 0xFF] = false;
                 return 0;
 
             case WM_INPUT:
                 dwSize = sizeof(lpb);
                 GetRawInputData((HRAWINPUT)lParam, RID_INPUT, lpb, &dwSize, sizeof(RAWINPUTHEADER));
-                input->UpdateRaw((const RAWINPUT*)lpb);
+                Inputs->UpdateRaw((const RAWINPUT*)lpb);
                 break;
 
         case WM_CLOSE:

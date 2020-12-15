@@ -2,6 +2,7 @@
 #define HF_PHYSICALOBJECT
 
 #include "GameObject.h"
+#include "../collision/AxisAlignedBB.h"
 
 class PhysicalGameObject : public GameObject {
 public:
@@ -12,7 +13,7 @@ public:
     virtual void Update() override;
 
     void SetPositionFromCenter(const Vector3& _pos) {
-        prev_pos = pos;
+        prev_pos = position;
         SetPosition(_pos);
     }
 
@@ -22,13 +23,13 @@ public:
     }
 
     void SetPosition(Point _pos) override {
-        prev_pos = pos;
-        pos = _pos;
+        prev_pos = position;
+        position = _pos;
         UpdateAABB();
     }
     void SetPosition(float x, float y, float z) override {
-        prev_pos = pos;
-        pos = Vector3(x, y, z);
+        prev_pos = position;
+        position = Vector3(x, y, z);
         UpdateAABB();
     }
     void SetScale(Size size) override {
@@ -40,12 +41,12 @@ public:
         UpdateAABB();
     }
     void UpdateAABB() {
-        //collider.SetPositionFromCenter(pos, scale);
+        collider.SetPositionFromCenter(position, scale);
     }
 
     virtual PhysicalGameObject* AsPhysicalGameObject() override { return this; }
 
-    //AxisAlignedBB collider;
+    AxisAlignedBB collider;
 
     Axis gravity;
     Axis velocity;
@@ -60,7 +61,7 @@ public:
     Point prev_pos;
 
     Point PosDifference() {
-        return pos - prev_pos;
+        return position - prev_pos;
     }
 };
 
