@@ -7,17 +7,6 @@
 #include "game/GameHeader.h"
 #include "resources.h"
 
-Mesh*    QUAD			;
-Mesh*    CUBE			;
-Mesh*    TUNNEL			;
-Shader*  SKY			;
-Shader*  PINK			;
-Shader*  TEXTURE		;
-Texture* ELECTROMAGNET  ;
-Texture* CHECKER_GREY   ;
-Texture* CHECKER_GREEN  ;
-Texture* GOLD			;
-
 HINSTANCE MAIN_INSTANCE;
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
@@ -29,16 +18,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	FILE* std_out = freopen("CON", "w", stdout);
 #endif
 
-	QUAD = new Mesh("quad.obj");
-	CUBE = new Mesh("cube.obj");
-	TUNNEL = new Mesh("tunnel.obj");
-	SKY = new Shader("sky");
-	PINK = new Shader("pink");
-	TEXTURE = new Shader("texture");
-	ELECTROMAGNET = new Texture("electromagnet.bmp", 1, 1);
-	CHECKER_GREY = new Texture("checker_grey.bmp", 1, 1);
-	CHECKER_GREEN = new Texture("checker_green.bmp", 1, 1);
-	GOLD = new Texture("gold.bmp", 1, 1);
+	//QUAD = new Mesh("quad.obj");
+	//CUBE = new Mesh("cube.obj");
+	//TUNNEL = new Mesh("tunnel.obj");
+	//SKY = new Shader("sky");
+	//PINK = new Shader("pink");
+	//TEXTURE = new Shader("texture");
+	//ELECTROMAGNET = new Texture("electromagnet.bmp", 1, 1);
+	//CHECKER_GREY = new Texture("checker_grey.bmp", 1, 1);
+	//CHECKER_GREEN = new Texture("checker_green.bmp", 1, 1);
+	//GOLD = new Texture("gold.bmp", 1, 1);
 
 	Logger::LogLine(Logger::FormatSenderInfo(L"WinMain", L"Starting game"));
 

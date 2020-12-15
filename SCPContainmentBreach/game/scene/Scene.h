@@ -3,11 +3,20 @@
 
 #include <vector>
 #include "../entity/player/Player.h"
+//class Sky;
+#include "../objects/presets/Sky.h"
+
 
 class Scene {
 public:
-	virtual void Load(std::vector<int>& objs, Player& player){}
+	Scene() { }
+	virtual void Load(Player* player){}
 	virtual void Unload() {}
+
+	bool HasLoaded;
+
+	std::vector<GameObject*> vObjects;
+	Sky* sky;
 };
 
 #endif

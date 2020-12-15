@@ -6,8 +6,9 @@
 #define GAME_BOB_OFFS			 0.015f
 #define GAME_BOB_DAMP			 0.04f
 #define GAME_BOB_MIN			 0.1f
-#define GAME_DELTATIME           0.002f
-#define GAME_UPDATES_PER_SECOND  500
+#define GAME_DELTATIME           0.0025f
+#define GAME_RENDER_DELTATIME    (1.0f / GAME_RENDERS_PER_SECOND)
+#define GAME_UPDATES_PER_SECOND  400
 #define GAME_RENDERS_PER_SECOND  90
 #define GAME_MAX_STEPS           30
 #define GAME_PLAYER_HEIGHT       1.5f

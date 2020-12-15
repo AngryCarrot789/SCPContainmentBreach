@@ -20,6 +20,12 @@ public:
 	static float Max(float a, float b) {
 		return a > b ? a : b;
 	}
+	static int nMin(int a, int b) {
+		return a < b ? a : b;
+	}
+	static int nMax(int a, int b) {
+		return a > b ? a : b;
+	}
 
 	static float Sin(float a) {
 		return std::sinf(a);

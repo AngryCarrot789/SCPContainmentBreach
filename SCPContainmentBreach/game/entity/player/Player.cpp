@@ -18,7 +18,9 @@ void Player::Reset() {
     friction = 0.04f;
     drag = 0.008f;
     onGround = true;
-    SetScale(0.6f, 1.2f, 0.6f);
+    useGravity = false;
+    SetScale(1.0f, 1.0f, 1.0f);
+    //SetScale(0.6f, 1.2f, 0.6f);
 }
 
 void Player::Update() {

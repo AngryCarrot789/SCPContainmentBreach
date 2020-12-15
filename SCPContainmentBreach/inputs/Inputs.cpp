@@ -16,6 +16,9 @@ void Input::EndFrame() {
 }
 
 void Input::UpdateRaw(const tagRAWINPUT* raw) {
+    static BYTE buffer[2048];
+    static UINT buffer_size = sizeof(buffer);
+
     if (raw->header.dwType == RIM_TYPEMOUSE) {
         if (raw->data.mouse.usFlags == MOUSE_MOVE_RELATIVE) {
             mouse_ddx += raw->data.mouse.lLastX;

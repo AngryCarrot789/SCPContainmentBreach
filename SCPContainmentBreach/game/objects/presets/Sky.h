@@ -1,11 +1,16 @@
 #ifndef HF_HEADERNAME
 #define HF_HEADERNAME
-#include "../../render/presets/Presets.h"
+#include "../../render/Mesh.h"
+#include "../../render/Shader.h"
 class Sky {
 public:
     Sky() {
-        mesh = QUAD;
-        shader = SKY;
+        mesh = new Mesh("quad.obj");
+        shader = new Shader("sky");
+    }
+    ~Sky() {
+        delete(mesh);
+        delete(shader);
     }
 
     void Draw(Camera* cam) {

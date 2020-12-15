@@ -7,6 +7,7 @@
 #include "game/entity/player/Player.h"
 #include "game/render/Camera.h"
 #include "window/Window.h"
+#include "game/scene/Scene.h"
 
 class Sky;
 
@@ -19,7 +20,6 @@ public:
 
 	int Run();
 	void Stop();
-
 	bool CanRun;
 
 	void Update();
@@ -28,13 +28,16 @@ public:
 	int64_t TotalTicks;
 	int64_t TicksSinceLastSecond;
 private:
-	Window* wMainWindow;
+	Window* main_window;
 	Timer timer;
 	Camera* main_camera;
-	Player* player;
-	GameObject go;
+	Player* main_player;
 
-	Sky* sky;
+	std::vector<Scene*> vScenes;
+	Scene* m_scene;
+	bool SceneActive() {
+		return m_scene != nullptr;
+	}
 };
 
 #endif // !HP_SCPCONTAINMENTBREACH

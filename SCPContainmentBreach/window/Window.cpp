@@ -20,6 +20,7 @@ Window::Window()
     Height = 720;
     IsFullScreen = false;
     IsCursorVisible = true;
+    input = new Input();
 }
 
 Window::Window(wstring_t title,
@@ -39,6 +40,7 @@ Window::Window(wstring_t title,
     Height = height;
     IsFullScreen = isFullscreen;
     IsCursorVisible = cursorVisible;
+    input = new Input();
 }
 
 void Window::InitialiseWindow()
@@ -47,6 +49,7 @@ void Window::InitialiseWindow()
     SetProcessDPIAware();
     CreateGLWindow();
     InitialiseOpenGL();
+    SetupInputs();
     SetWindowLongPtr(Handle, GWLP_USERDATA, (LONG_PTR)this);
 }
 
@@ -155,7 +158,7 @@ void Window::SetupInputs()
 
     RAWINPUTDEVICE Rid[3];
 
-    Logger::LogLineWindow(Title, L"Setting up inputs; Mouse, Joystick and Gamepad");
+    Logger::LogLineWindow(Title, L"Setting up inputs: Mouse, Joystick and Gamepad");
     //Mouse
     Rid[0].usUsagePage = HID_USAGE_PAGE_GENERIC;
     Rid[0].usUsage = HID_USAGE_GENERIC_MOUSE;
@@ -176,10 +179,10 @@ void Window::SetupInputs()
 
     Logger::LogWindow(Title, L"Registering raw input devices...");
     if (RegisterRawInputDevices(Rid, 3, sizeof(Rid[0]))) {
-        Logger::LogLineWindow(Title, L"Success!");
+        Logger::LogLine(L"Success!");
     }
     else {
-        Logger::LogLineWindow(Title, L"Failed :(");
+        Logger::LogLine(L"Failed :(");
     }
 }
 
@@ -259,6 +262,22 @@ Position Window::GetWindowCenter()
     return Position((rect.right + rect.left) / 2, (rect.top + rect.bottom) / 2);
 }
 
+int Window::Update()
+{
+    MSG msg;
+    if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+        //Handle windows messages
+        if (msg.message == WM_QUIT) {
+            return ErrorCodes::ECWINDOW_EXIT;
+        }
+        else {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+    }
+    return ErrorCodes::EC_NOERROR;
+}
+
 LRESULT Window::WindowProc(HWND hCurWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     static PAINTSTRUCT ps;
@@ -286,10 +305,8 @@ LRESULT Window::WindowProc(HWND hCurWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
         case WM_KEYDOWN:
             //Ignore repeat keys
             if (lParam & 0x40000000) { return 0; }
-            //if (GameInput) {
-            //    Inputs.KeysDown[wParam & 0xFF] = true;
-            //    Inputs.KeysPressed[wParam & 0xFF] = true;
-            //}
+            input->KeysDown[wParam & 0xFF] = true;
+            input->KeysPressed[wParam & 0xFF] = true;
             return 0;
 
         case WM_SYSKEYDOWN:
@@ -299,15 +316,15 @@ LRESULT Window::WindowProc(HWND hCurWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
             }
             break;
 
-            //case WM_KEYUP:
-            //    input.key[wParam & 0xFF] = false;
-            //    return 0;
+            case WM_KEYUP:
+                input->KeysDown[wParam & 0xFF] = false;
+                return 0;
 
-            //case WM_INPUT:
-            //    dwSize = sizeof(lpb);
-            //    GetRawInputData((HRAWINPUT)lParam, RID_INPUT, lpb, &dwSize, sizeof(RAWINPUTHEADER));
-            //    input.UpdateRaw((const RAWINPUT*)lpb);
-            //    break;
+            case WM_INPUT:
+                dwSize = sizeof(lpb);
+                GetRawInputData((HRAWINPUT)lParam, RID_INPUT, lpb, &dwSize, sizeof(RAWINPUTHEADER));
+                input->UpdateRaw((const RAWINPUT*)lpb);
+                break;
 
         case WM_CLOSE:
             PostQuitMessage(0);

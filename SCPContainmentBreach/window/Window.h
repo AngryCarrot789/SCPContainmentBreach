@@ -3,6 +3,7 @@
 
 #include <Windows.h>
 #include "../standard.h"
+#include "../inputs/Inputs.h"
 
 struct Position {
 	Position(LONG x, LONG y) {
@@ -53,7 +54,9 @@ public:
 	void ToggleFullscreen() { SetFullscreen(!IsFullScreen); }
 	void ToggleCursorVisibility() { SetCursorVisibility(!IsCursorVisible); }
 
+	int Update();
 	LRESULT WindowProc(HWND hCurWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	Input* input;
 
 	void DisposeWindow();
 

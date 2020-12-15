@@ -5,6 +5,7 @@
 #include "GL/glew.h"
 #include "game/objects/presets/Sky.h"
 #include "game/render/presets/Presets.h"
+#include "game/scene/scenes/MainScene.h"
 
 Window* MAIN_WINDOW;
 Input* MAIN_INPUT;
@@ -16,7 +17,7 @@ SCPContainmentBreach::SCPContainmentBreach()
 
 int SCPContainmentBreach::Initialise()
 {
-    wMainWindow = new Window(
+    main_window = new Window(
         L"SCP Containment Breach",
         L"SCPContainmentBreach",
         MAIN_INSTANCE,
@@ -26,9 +27,15 @@ int SCPContainmentBreach::Initialise()
         true
     );
 
-    wMainWindow->InitialiseWindow();
-    MAIN_WINDOW = wMainWindow;
-    MAIN_INPUT = new Input();
+    main_window->InitialiseWindow();
+    MAIN_WINDOW = main_window;
+    MAIN_INPUT = main_window->input;
+
+    main_player = new Player();
+
+    m_scene = new MainScene();
+    vScenes.push_back(m_scene);
+    m_scene->Load(main_player);
 
     Logger::LogLineFormat(L"SCP Containment Breach", L"Successfully initialised");
 
@@ -49,29 +56,12 @@ int SCPContainmentBreach::Run()
 
     Logger::LogLineFormat(L"SCP Containment Breach", L"Running Game Loop");
 
-    go.mesh = CUBE;
-    go.texture = ELECTROMAGNET;
-    go.shader = TEXTURE;
-    go.pos = Point(0, 0, 0);
-
-    player = new Player();
-    player->pos = Point(0, 0, -4);
-
     main_camera = new Camera();
-    
-    sky = new Sky();
 
     while (CanRun) {
-        MSG msg;
-        if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-            //Handle windows messages
-            if (msg.message == WM_QUIT) {
-                break;
-            }
-            else {
-                TranslateMessage(&msg);
-                DispatchMessage(&msg);
-            }
+        int code = main_window->Update();
+        if (code == ErrorCodes::ECWINDOW_EXIT) {
+            return code;
         }
 
         if (MAIN_INPUT->KeysPressed[VK_ESCAPE]) {
@@ -92,14 +82,14 @@ int SCPContainmentBreach::Run()
                 TicksSinceLastSecond = 0;
             MAIN_INPUT->EndFrame();
         }
-        currentTicks = Maths::Max(newTicks, currentTicks);// (currentTicks < newTicks ? newTicks : currentTicks);
+        currentTicks = (currentTicks < newTicks ? newTicks : currentTicks);
 
         if (TotalTicks % renderWait == 0) {
             //Setup camera for rendering
             //if (!lockCameraPos) {
             //    cam_matrix = player->WorldToCam();
             //}
-            main_camera->worldView = player->WorldToLocal();
+            main_camera->worldView = main_player->WorldToLocal();
             main_camera->SetSize(MAIN_WINDOW->Width, MAIN_WINDOW->Height, CAMERA_DEFAULT_NEAR, CAMERA_DEFAULT_FAR, CAMERA_DEFAULT_FOV);
             main_camera->UseViewport();
         
@@ -121,19 +111,24 @@ void SCPContainmentBreach::Stop()
 
 void SCPContainmentBreach::Update()
 {
-    go.Update();
-    player->Update();
+    if (SceneActive()) {
+        for (GameObject* object : m_scene->vObjects) {
+            object->Update();
+        }
+    }
 }
 
 void SCPContainmentBreach::Render(Camera* cam)
 {
-    glClear(GL_DEPTH_BUFFER_BIT);
-    sky->Draw(cam);
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    if (SceneActive()) {
+        glClear(GL_DEPTH_BUFFER_BIT);
+        m_scene->sky->Draw(cam);
+        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glViewport(0, 0, MAIN_WINDOW->Width, MAIN_WINDOW->Height);
+        for (GameObject* object : m_scene->vObjects) {
+            object->Draw(cam);
+        }
 
-    go.Draw(cam);
-
-    SwapBuffers(MAIN_WINDOW->DeviceContext);
+        SwapBuffers(MAIN_WINDOW->DeviceContext);
+    }
 }

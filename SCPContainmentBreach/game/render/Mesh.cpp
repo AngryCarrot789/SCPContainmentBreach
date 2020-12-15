@@ -7,7 +7,7 @@
 
 Mesh::Mesh(const char* fname) {
     //Open the file for reading
-    std::ifstream fin(string_t("resources/meshes/") + fname);
+    std::ifstream fin(std::string("Resources/Meshes/") + fname);
     if (!fin) {
         return;
     }
@@ -18,7 +18,7 @@ Mesh::Mesh(const char* fname) {
     bool is3DTex = false;
 
     //Read the file
-    string_t line;
+    std::string line;
     while (!fin.eof()) {
         std::getline(fin, line);
         if (line.find("v ") == 0) {
@@ -166,13 +166,13 @@ Mesh::Mesh(const char* fname) {
 }
 
 Mesh::~Mesh() {
-  glDeleteBuffers(NUM_VBOS, vbo);
-  glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(NUM_VBOS, vbo);
+    glDeleteVertexArrays(1, &vao);
 }
 
 void Mesh::Draw() {
-  glBindVertexArray(vao);
-  glDrawArrays(GL_TRIANGLES, 0, (GLsizei)verts.size());
+    glBindVertexArray(vao);
+    glDrawArrays(GL_TRIANGLES, 0, (GLsizei)verts.size());
 }
 
 void Mesh::AddFace(
