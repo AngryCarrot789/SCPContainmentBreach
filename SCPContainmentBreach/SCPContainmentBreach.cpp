@@ -127,6 +127,7 @@ int SCPContainmentBreach::Run()
 	return ErrorCodes::ECGLOOP_EXITED_UNEXPECTED;
 }
 
+// lol me trying to debug be like:
 
 #define ToStr(__i) std::to_string(__i)
 #define BToStr(__b) wstring_t(__b == true ? L"true" : L"false"))

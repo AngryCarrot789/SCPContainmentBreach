@@ -3,7 +3,7 @@
 
 #include <Windows.h>
 #include "../standard.h"
-#include "../inputs/Inputs.h"
+#include "../inputs/Input.h"
 
 typedef struct _WindowPosition {
 	_WindowPosition(LONG x, LONG y) {

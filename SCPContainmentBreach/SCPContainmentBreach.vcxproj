@@ -153,7 +153,7 @@
     <ClCompile Include="game\render\Mesh.cpp" />
     <ClCompile Include="game\render\Shader.cpp" />
     <ClCompile Include="game\render\Texture.cpp" />
-    <ClCompile Include="inputs\Inputs.cpp" />
+    <ClCompile Include="inputs\Input.cpp" />
     <ClCompile Include="logging\Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="math\Quaternion.cpp" />
@@ -179,7 +179,7 @@
     <ClInclude Include="game\render\Shader.h" />
     <ClInclude Include="game\render\Texture.h" />
     <ClInclude Include="game\scene\scenes\MainScene.h" />
-    <ClInclude Include="inputs\Inputs.h" />
+    <ClInclude Include="inputs\Input.h" />
     <ClInclude Include="logging\ErrorCodes.h" />
     <ClInclude Include="logging\Logger.h" />
     <ClInclude Include="math\Maths.h" />

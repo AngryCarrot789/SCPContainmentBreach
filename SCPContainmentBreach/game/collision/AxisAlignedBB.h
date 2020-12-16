@@ -157,13 +157,20 @@ public:
 		return intersection.x != 0.0f && intersection.y != 0.0f && intersection.z != 0.0f;
 	}
 
+	void swap(float& a, float& b) {
+		float _a = a;
+		float _b = b;
+		a = _b;
+		b = _a;
+	}
+
 	bool IsRayIntersectingAABB(const Point& rayOrigin, const Axis& rayDir, Point& contactPoint, Point& contactNorm, float& tHitnear) {
 		Vector3 tNear = (GetPosition() - rayOrigin) / rayDir;
 		Vector3 tFar = (GetPosition() + GetSize() - rayOrigin) / rayDir;
 
-		if (tNear.x > tFar.x) std::swap(tNear.x, tFar.x);
-		if (tNear.y > tFar.y) std::swap(tNear.y, tFar.y);
-		if (tNear.z > tFar.z) std::swap(tNear.z, tFar.z);
+		if (tNear.x > tFar.x) swap(tNear.x, tFar.x);
+		if (tNear.y > tFar.y) swap(tNear.y, tFar.y);
+		if (tNear.z > tFar.z) swap(tNear.z, tFar.z);
 
 		if (tNear.x > tFar.x || tNear.y > tFar.y || tNear.z > tFar.z) {
 			return false;

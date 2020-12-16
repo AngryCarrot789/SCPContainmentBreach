@@ -1,4 +1,3 @@
-
 #ifndef HF_INPUTS
 #define HF_INPUTS
 

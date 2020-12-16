@@ -130,6 +130,13 @@ public:
             (*this) /= std::sqrt(r);
         }
     }
+    inline Vector3 UnitInvert() {
+        Vector3 a = Vector3(0, 0, 0);
+        a.x = x == 1 ? 0 : 1;
+        a.y = y == 1 ? 0 : 1;
+        a.z = z == 1 ? 0 : 1;
+        return a;
+    }
 
     inline Vector3 DegreesToRadians() {
         return *this / Maths::DEG_RAD_CONST;

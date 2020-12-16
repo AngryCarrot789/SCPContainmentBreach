@@ -41,12 +41,13 @@ public:
         UpdateAABB();
     }
     void UpdateAABB() {
-        collider.SetPositionFromCenter(position, scale);
+        collider.SetPositionFromCenter(position, colliderScale * scale);
     }
 
     virtual PhysicalGameObject* AsPhysicalGameObject() override { return this; }
 
     AxisAlignedBB collider;
+    Size colliderScale;
 
     Axis gravity;
     Axis velocity;
