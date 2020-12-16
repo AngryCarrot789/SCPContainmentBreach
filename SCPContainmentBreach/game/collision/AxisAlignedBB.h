@@ -8,6 +8,8 @@ public:
 	float minX, minY, minZ;
 	float maxX, maxY, maxZ;
 
+	bool isIntersectingX, isIntersectingY, isIntersectingZ;
+
 	AxisAlignedBB() : minX(0), minY(0), minZ(0), maxX(0), maxY(0), maxZ(0) {}
 
 	AxisAlignedBB(float miX, float miY, float miZ, float maX, float maY, float maZ) {
@@ -66,6 +68,21 @@ public:
 	void Offset(float x, float y, float z) {
 		minX += x; minY += y; minZ += z;
 		maxX += x; maxY += y; maxZ += z;
+	}
+
+	void UpdateIntersectAABBX(const AxisAlignedBB aabb) {
+		float intersect = GetIntersectionAmountX(aabb, true);
+		isIntersectingX = intersect > 0.0f && intersect < 0.1f;
+	}
+
+	void UpdateIntersectAABBY(const AxisAlignedBB aabb) {
+		float intersect = GetIntersectionAmountY(aabb, true);
+		isIntersectingY = intersect > 0.0f && intersect < 0.1f;
+	}
+
+	void UpdateIntersectAABBZ(const AxisAlignedBB aabb) {
+		float intersect = GetIntersectionAmountZ(aabb, true);
+		isIntersectingZ = intersect > 0.0f && intersect < 0.1f;
 	}
 
 	float GetIntersectionAmountX(const AxisAlignedBB aabb, bool checkIntersection) {
@@ -140,6 +157,43 @@ public:
 		return intersection.x != 0.0f && intersection.y != 0.0f && intersection.z != 0.0f;
 	}
 
+	bool IsRayIntersectingAABB(const Point& rayOrigin, const Axis& rayDir, Point& contactPoint, Point& contactNorm, float& tHitnear) {
+		Vector3 tNear = (GetPosition() - rayOrigin) / rayDir;
+		Vector3 tFar = (GetPosition() + GetSize() - rayOrigin) / rayDir;
+
+		if (tNear.x > tFar.x) std::swap(tNear.x, tFar.x);
+		if (tNear.y > tFar.y) std::swap(tNear.y, tFar.y);
+		if (tNear.z > tFar.z) std::swap(tNear.z, tFar.z);
+
+		if (tNear.x > tFar.x || tNear.y > tFar.y || tNear.z > tFar.z) {
+			return false;
+		}
+
+		tHitnear = Maths::Max3(tNear.x, tNear.y, tNear.z);
+		float tHitFar = Maths::Min3(tFar.x, tFar.y, tFar.z);
+
+		if (tHitFar < 0.0f) {
+			return false;
+		}
+
+		contactPoint = rayOrigin + tHitnear * rayDir;
+
+		if (tNear.x > tNear.y) {
+			if (rayDir.x < 0.0f) 
+				contactNorm = Point(1, 0, 0);
+			else 
+				contactNorm = Point(-1, 0, 0);
+		}
+		else if (tNear.x < tNear.y) {
+			if (rayDir.y < 0.0f)
+				contactNorm = Point(0, 1, 0);
+			else
+				contactNorm = Point(0, -1, 0);
+		}
+
+		return true;
+	}
+
 
 	float GetAverageEdgeLength() {
 		float x = maxX - minX;
@@ -163,13 +217,17 @@ public:
 		return aabb.maxZ > minZ && aabb.minZ < maxZ;
 	}
 
+
 	Point GetMinimum() { return Point(minX, minY, minZ); }
 	Point GetMaximum() { return Point(maxX, maxY, maxZ); }
+	Point GetPosition() { return GetMinimum(); }
 
-	float GetSizeX() { return IsDirectionFlippedX() ? minX - maxX : maxX - minX; }
-	float GetSizeY() { return IsDirectionFlippedY() ? minY - maxY : maxY - minY; }
-	float GetSizeZ() { return IsDirectionFlippedZ() ? minZ - maxZ : maxZ - minZ; }
+	float GetSizeX() { return maxX - minX; }
+	float GetSizeY() { return maxY - minY; }
+	float GetSizeZ() { return maxZ - minZ; }
 	Size GetSize() { return Size(GetSizeX(), GetSizeY(), GetSizeZ()); }
+
+	// most of this stuff is useless idk why i added it lol
 
 	bool MaxOverlapsAABBMinX(AxisAlignedBB aabb) { return maxX > aabb.minX; }
 	bool MinOverlapsAABBMaxX(AxisAlignedBB aabb) { return minX < aabb.maxX; }
@@ -193,11 +251,6 @@ public:
 		AxisAlignedBB aabb = AxisAlignedBB(min, max);
 		return aabb;
 	}
-
-private:
-	bool IsDirectionFlippedX() { return minX > maxX; }
-	bool IsDirectionFlippedY() { return minY > maxY; }
-	bool IsDirectionFlippedZ() { return minZ > maxZ; }
 };
 
 #endif // !HF_AABB

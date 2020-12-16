@@ -155,6 +155,14 @@ inline void operator/=(float b, Vector3& v) {
     v.x = b / v.x; v.y = b / v.y; v.z = b / v.z;
 }
 
+inline Vector3 operator*(float b, const Vector3& v) {
+    return Vector3(b * v.x, b * v.y, b * v.z);
+}
+
+inline void operator*=(float b, Vector3& v) {
+    v.x = b * v.x; v.y = b * v.y; v.z = b * v.z;
+}
+
 // A few type definitions for vectors to for easier understanding of a purpose in a function for example
 
 // Represents a point for vertices

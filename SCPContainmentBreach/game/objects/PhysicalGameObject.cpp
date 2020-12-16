@@ -26,3 +26,21 @@ void PhysicalGameObject::Update() {
     SetVelocity(velocity * (1.0f - drag));
     SetPosition(position + velocity * GAME_DELTATIME);
 }
+
+void PhysicalGameObject::TryCollision(const AxisAlignedBB& aabb)
+{
+    float intersectX = collider.GetIntersectionAmountX(aabb, true);
+    float intersectY = collider.GetIntersectionAmountY(aabb, true);
+    float intersectZ = collider.GetIntersectionAmountZ(aabb, true);
+    Point difference = PosDifference();
+
+    //if (intersectX > 0.0f) {
+    //    SetPosition(position + (-(difference * Vector3::UnitX())));// + Point(0.00001f, 0.0f, 0.0f));
+    //}                                                              //
+    //if (intersectY > 0.0f) {                                       //
+    //    SetPosition(position + (-(difference * Vector3::UnitY())));// + Point(0.0f, 0.00001f, 0.0f));
+    //}                                                              //
+    //if (intersectZ > 0.0f) {                                       //
+    //    SetPosition(position + (-(difference * Vector3::UnitZ())));// + Point(0.0f, 0.0f, 0.00001f));
+    //}
+}

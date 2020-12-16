@@ -17,7 +17,7 @@ public:
 	Vector3 CamOffset();
 
 	void Look(float mouseDx, float mouseDy);
-	void Move(float moveF, float moveL, float moveUp);
+	void Move(float moveB, float moveR, float moveU);
 
 	float WalkAcceleration = 10.0f;
 	float WalkSpeed = 2.7f;

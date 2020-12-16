@@ -63,6 +63,8 @@ public:
     Point PosDifference() {
         return position - prev_pos;
     }
+
+    void TryCollision(const AxisAlignedBB& aabb);
 };
 
 

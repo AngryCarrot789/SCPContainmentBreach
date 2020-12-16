@@ -13,8 +13,8 @@ LRESULT WINAPI StaticWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 
 Window::Window()
 {
-    Title = L"AtomiCraft Game";
-    Class = L"AtomiCraft";
+    Title = L"SCP Containment Breach Game";
+    Class = L"SCP";
     PositionX = CW_USEDEFAULT;
     PositionY = CW_USEDEFAULT;
     Width = 1280;

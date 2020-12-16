@@ -165,42 +165,13 @@ void SCPContainmentBreach::Update()
             PhysicalGameObject* playerPhys = main_player->AsPhysicalGameObject();
             if (!playerPhys) continue;
 
-            //Logger::LogLine(AABB_OFFSETX(aabb1, aabb2));
-            //Logger::LogLine(AABB_OFFSETY(aabb1, aabb2));
-            //Logger::LogLine(AABB_OFFSETZ(aabb1, aabb2));
-            //wstring_t b1 = AABBwString(aabb1);
-            //wstring_t b2 = AABBwString(aabb2);
-            //Logger::LogLine(b1);
-            //Logger::LogLine(b2);
-            //Logger::LogLine(AABBvAABBX(aabb1, aabb2));
-            //Logger::LogLine(AABBvAABBY(aabb1, aabb2));
-            //Logger::LogLine(AABBvAABBZ(aabb1, aabb2));
 
             // Player-GameObject collisions
 
             AxisAlignedBB& aabb1 = main_player->collider;
             AxisAlignedBB& aabb2 = phys1->collider;
 
-            if (aabb1.IsAABBIntersectingAABB(aabb2)) {
-                //playerPhys->SetVelocity(playerPhys->velocity * (-(aabb1.GetIntersection(aabb2) + 0.1f)));
-            }
-
-            // Inter-GameObject collisions
-
-            //for (GameObject* object2 : m_scene->vObjects) {
-            //    if (!object2) continue;
-            //    if (object1 == object2) continue;
-            //
-            //    PhysicalGameObject* phys2 = object2->AsPhysicalGameObject();
-            //    if (!phys2) continue;
-            //
-            //    AxisAlignedBB& aabb1 = phys1->collider;
-            //    AxisAlignedBB& aabb2 = phys2->collider;
-            //
-            //    if (aabb1.IsAABBIntersectingAABB(aabb2)) {
-            //        DebugDrawing::DrawAABBOutline(main_camera, phys1->collider, 0, 1, 0);
-            //    }
-            //}
+            main_player->TryCollision(aabb2);
         }
     }
 }

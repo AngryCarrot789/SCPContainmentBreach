@@ -20,6 +20,14 @@ public:
 	static float Max(float a, float b) {
 		return a > b ? a : b;
 	}
+	static float Min3(float a, float b, float c) {
+		float _a = Min(a, b);
+		return Min(_a, c);
+	}
+	static float Max3(float a, float b, float c) {
+		float _a = Max(a, b);
+		return Max(_a, c);
+	}
 	static int nMin(int a, int b) {
 		return a < b ? a : b;
 	}

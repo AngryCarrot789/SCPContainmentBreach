@@ -1,9 +1,9 @@
 #ifndef HF_GROUND
 #define HF_GROUND
 
-#include "../GameObject.h"
+#include "../PhysicalGameObject.h"
 
-class Ground : public GameObject
+class Ground : public PhysicalGameObject
 {
 public:
     Ground() {
@@ -14,6 +14,7 @@ public:
         shader = PRESETS.Shaders.Texture;
         texture = PRESETS.Textures.CheckerboardGreen;
         scale = Vector3(20.0f, 0.001f, 20.0f);
+        useGravity = false;
     }
     virtual ~Ground() {}
 };
