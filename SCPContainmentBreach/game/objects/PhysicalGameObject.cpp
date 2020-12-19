@@ -8,7 +8,8 @@ PhysicalGameObject::PhysicalGameObject() {
 
 void PhysicalGameObject::Reset() {
     GameObject::Reset();
-    colliderScale = Size(1, 1, 1);
+    setColliderScaleAsObjectScale = true;
+    colliderScale = scale;
     SetVelocity(Axis::Zero());
     SetScale(1, 1, 1);
     gravity.Set(0.0f, -9.8f, 0.0f);
@@ -17,12 +18,16 @@ void PhysicalGameObject::Reset() {
     friction = 0.02f;
     hiGAME_friction = 0.0f;
     drag = 0.008f;
-    useGravity = true;
+    useGravity = false;
     useCollisions = true;
     SetPosition(0, 0, 0);
 }
 
 void PhysicalGameObject::Update() {
+    if (setColliderScaleAsObjectScale) {
+        colliderScale = scale;
+    }
+
     if (useGravity)
         SetVelocity(velocity + gravity * GAME_DELTATIME);
     SetVelocity(velocity * (1.0f - drag));
@@ -59,6 +64,8 @@ void PhysicalGameObject::TryCollision(const AxisAlignedBB& aabb)
 
     if (mins > 0.0f) {
         position += (-(difference * normal));
+        //position += (-difference + (normal * 0.001f));
+        velocity *= normal.UnitInvert() + -difference;
     }
 
     //if (intersectX > 0.0f) {

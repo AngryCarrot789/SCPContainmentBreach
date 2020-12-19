@@ -10,7 +10,7 @@ Player::Player() {
 
 void Player::Reset() {
     PhysicalGameObject::Reset();
-    //colliderScale = Vector3(0.4f, 0.9f, 0.4f);
+    setColliderScaleAsObjectScale = false;
     cam_rx = 0.0f;
     cam_ry = 0.0f;
     bob_mag = 0.0f;
@@ -19,8 +19,9 @@ void Player::Reset() {
     friction = 0.04f;
     drag = 0.008f;
     onGround = true;
-    useGravity = true;
+    useGravity = false;
     SetScale(1.0f, 1.0f, 1.0f);
+    colliderScale = Vector3(0.3f, 0.5f, 0.3f);
     //SetScale(0.6f, 1.2f, 0.6f);
 }
 

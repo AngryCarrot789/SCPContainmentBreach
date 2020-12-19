@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "../collision/AxisAlignedBB.h"
+#include "../GameHeader.h"
 
 class PhysicalGameObject : public GameObject {
 public:
@@ -41,13 +42,21 @@ public:
         UpdateAABB();
     }
     void UpdateAABB() {
-        collider.SetPositionFromCenter(position, colliderScale * scale);
+        collider.SetPositionFromCenter(position, colliderScale);
+    }
+
+    void MoveForward(float speed) {
+        const Matrix4 toWorld = LocalToWorld() * Matrix4::CreateRotationY(euler.y);
+        Euler lookDirection = toWorld.MultiplyDirection(Vector3(0.0f, 0, -speed));
+        Vector3 movement = lookDirection * (speed * GAME_DELTATIME);
+        position += movement;
     }
 
     virtual PhysicalGameObject* AsPhysicalGameObject() override { return this; }
 
     AxisAlignedBB collider;
     Size colliderScale;
+    bool setColliderScaleAsObjectScale;
 
     Axis gravity;
     Axis velocity;

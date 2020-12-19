@@ -71,6 +71,11 @@ int SCPContainmentBreach::Run()
     MAIN_WINDOW->SetCursorConfined(true);
     MAIN_WINDOW->SetCursorVisibility(false);
 
+    Cube* cube = new Cube();
+    cube->position = Vector3(2.0f, 2.0f, 5.0f);
+    cube->scale = Vector3(0.5f, 0.5f, 0.5f);
+    m_scene->vObjects.push_back(cube);
+
     while (CanRun) {
         int code = main_window->Update();
         if (code == ErrorCodes::ECWINDOW_EXIT) {
@@ -100,6 +105,10 @@ int SCPContainmentBreach::Run()
             MAIN_INPUT->UpdateInputs();
             // Update Game
             Update();
+
+            cube->euler.y += 0.3f * GAME_DELTATIME;
+            cube->MoveForward(2.0f);
+
 
             currentTicks += ticksPerStep;
             TotalTicks += 1;
