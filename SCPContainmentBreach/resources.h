@@ -6,6 +6,7 @@
 
 #include "window/Window.h"
 #include "inputs/Input.h"
+//extern TextDrawing* TEXT_DRAWER;
 extern Window* MAIN_WINDOW;
 extern HINSTANCE MAIN_INSTANCE;
 extern Input* MAIN_INPUT;

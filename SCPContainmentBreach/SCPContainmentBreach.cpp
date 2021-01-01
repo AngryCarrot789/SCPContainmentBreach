@@ -10,9 +10,10 @@
 
 Window* MAIN_WINDOW;
 Input* MAIN_INPUT;
+//TextDrawing* TEXT_DRAWER;
 
 Presets PRESETS;
-TextDrawing GLTEXT;
+//TextDrawing GLTEXT;
 
 SCPContainmentBreach::SCPContainmentBreach()
 {
@@ -35,6 +36,9 @@ int SCPContainmentBreach::Initialise()
     MAIN_WINDOW = main_window;
     MAIN_INPUT = main_window->Inputs;
 
+    //TEXT_DRAWER = new TextDrawing();
+    //TEXT_DRAWER->In
+
     main_player = new Player();
 
     SetupPresetObjectStuff();
@@ -45,7 +49,7 @@ int SCPContainmentBreach::Initialise()
 
     LoadScene(0);
 
-    GLTEXT.InitOpenGLText();
+    //GLTEXT.InitOpenGLText();
 
     Logger::LogLineFormat(L"SCP Containment Breach", L"Successfully initialised");
 
